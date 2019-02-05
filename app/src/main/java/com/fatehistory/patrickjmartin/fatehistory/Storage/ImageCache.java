@@ -1,4 +1,4 @@
 package com.fatehistory.patrickjmartin.fatehistory.Storage;
 
-public class HisotricalFigureDbHelper {
+public class ImageCache {
 }

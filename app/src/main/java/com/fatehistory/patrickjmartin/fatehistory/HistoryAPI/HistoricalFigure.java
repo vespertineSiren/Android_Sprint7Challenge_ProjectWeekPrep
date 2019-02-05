@@ -1,14 +1,18 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
+import android.text.TextUtils;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class HistoricalFigure {
-    private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio,realName,
-        realLongBio;
+    private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio, fateImageURL,
+            realName, realLongBio, realImageURL;
 
     private Integer fateHeight, fateWeight;
 
-     private HashMap<String, String> realInfoBox;
+    private HashMap<String, String> realInfoBox;
 
     public HistoricalFigure(String fateAlias, String fateDefaultBio, String fateAligment,
                             String fateSource, String fateCountry, String fateGender,
@@ -27,6 +31,12 @@ public class HistoricalFigure {
         this.fateWeight = fateWeight;
         this.realInfoBox = new HashMap<>();
     }
+
+    public HistoricalFigure(JSONObject fateJSON, JSONObject realLongBioJSON, JSONObject realInfoBoxJSON) {
+
+    }
+
+
 
     public String getFateAlias() {
         return fateAlias;
