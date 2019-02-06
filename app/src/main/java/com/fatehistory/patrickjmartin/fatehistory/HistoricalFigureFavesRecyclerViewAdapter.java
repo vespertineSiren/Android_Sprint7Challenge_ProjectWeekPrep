@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.FavoriteFragment.OnListFragmentInteractionListener;
-import com.fatehistory.patrickjmartin.fatehistory.dummy.DummyContent.DummyItem;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
 
 import java.util.List;
 
 
 public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapter<HistoricalFigureFavesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<HistoricalFigure> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public HistoricalFigureFavesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public HistoricalFigureFavesRecyclerViewAdapter(List<HistoricalFigure> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -32,8 +32,7 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +40,7 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+
                 }
             }
         });
@@ -56,7 +55,7 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public HistoricalFigure mItem;
 
         public ViewHolder(View view) {
             super(view);
