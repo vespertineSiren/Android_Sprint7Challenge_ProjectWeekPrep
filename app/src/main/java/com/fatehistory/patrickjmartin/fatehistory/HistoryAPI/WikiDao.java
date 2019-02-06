@@ -14,7 +14,7 @@ public class WikiDao {
 
     //Might not need this since BASE_BIOGRAPHY_URL provides tags
     private static String BASE_INFOBOX_URL =
-            "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=";
+            "https://en.wikipedia.org/api/rest_v1/page/summary/";
 
     private static final String HISTORICAL_INFBOX_URL = BASE_INFOBOX_URL + "%d";
 
@@ -22,6 +22,12 @@ public class WikiDao {
             "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=";
 
     private static final String HISTORICAL_IMAGE_URL = BASE_IMAGE_URL + "%d";
+
+//    public static HistoricalFigure getFateRealBio(String fandomID, String wikipediaID) {
+//
+//
+//        return void;
+//    }
 
 
 

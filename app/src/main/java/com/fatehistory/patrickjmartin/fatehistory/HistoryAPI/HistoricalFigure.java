@@ -7,30 +7,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class HistoricalFigure {
-    private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio, fateImageURL,
-            realName, realLongBio, realImageURL;
+    private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio, fateImageKey,
+            realName, realDefaultBio, realImageURL;
 
-    private Integer fateHeight, fateWeight;
+    private Integer fateHeight, fateWeight, wikiPageID;
 
-    private HashMap<String, String> realInfoBox;
 
-    public HistoricalFigure(String fateAlias, String fateDefaultBio, String fateAligment,
-                            String fateSource, String fateCountry, String fateGender,
-                            String fateMiniBio, String realName, String realLongBio,
-                            Integer fateHeight, Integer fateWeight) {
-        this.fateAlias = fateAlias;
-        this.fateDefaultBio = fateDefaultBio;
-        this.fateAligment = fateAligment;
-        this.fateSource = fateSource;
-        this.fateCountry = fateCountry;
-        this.fateGender = fateGender;
-        this.fateMiniBio = fateMiniBio;
-        this.realName = realName;
-        this.realLongBio = realLongBio;
-        this.fateHeight = fateHeight;
-        this.fateWeight = fateWeight;
-        this.realInfoBox = new HashMap<>();
-    }
 
     public HistoricalFigure(JSONObject fateJSON, JSONObject realLongBioJSON, JSONObject realInfoBoxJSON) {
 
@@ -70,9 +52,7 @@ public class HistoricalFigure {
         return realName;
     }
 
-    public String getRealLongBio() {
-        return realLongBio;
-    }
+
 
     public Integer getFateHeight() {
         return fateHeight;
