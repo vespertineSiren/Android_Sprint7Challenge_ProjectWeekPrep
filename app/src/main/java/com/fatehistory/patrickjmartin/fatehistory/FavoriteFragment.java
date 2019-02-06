@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fatehistory.patrickjmartin.fatehistory.dummy.DummyContent;
-import com.fatehistory.patrickjmartin.fatehistory.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 

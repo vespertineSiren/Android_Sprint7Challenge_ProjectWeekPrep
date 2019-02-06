@@ -2,19 +2,22 @@ package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
 import android.text.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 public class HistoricalFigure {
     private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio, fateImageKey,
-            realName, realDefaultBio, realImageURL;
+            realName, realBio, realImageURL;
 
     private Integer fateHeight, fateWeight, wikiPageID;
 
 
 
-    public HistoricalFigure(JSONObject fateJSON, JSONObject realLongBioJSON, JSONObject realInfoBoxJSON) {
+    public HistoricalFigure(JSONObject fateJSON, JSONObject realJSON) {
+        JSONObject temp;
+        JSONArray tempAry;
 
     }
 
