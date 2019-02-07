@@ -32,10 +32,10 @@ public class HistoricalFigureSearchHelper {
             result.put("atlanta", new String[] {"Atalanta", "8269", "ArcherAtalantaStage3"});
             result.put("attila", new String[] {"Attila the Hun", "14836", "SaberAlteraStage3"});
             result.put("bedivere", new String[] {"Bedivere", "19423", "SaberBedivereStage3.jpg"});
-            result.put("benkei", new String[] {"Benkei", "1123", "LancerBenkeiStage3"});
+            result.put("benkei", new String[] {"Benkei", "11233", "LancerBenkeiStage3"});
             result.put("beowulf", new String[] {"Beowulf_(hero)", "18104", "BerserkerBeowulfStage3"});
             result.put("billy the kid", new String[] {"Billy_the_Kid", "17069", "ArcherBillyStage3"});
-            result.put("blackbeard", new String[] {"Blackbeard", "15859", "Edward_Teach"});
+            result.put("blackbeard", new String[] {"Blackbeard", "15859", "RiderEdGOStage3"});
             result.put("boudica", new String[] {"Boudica", "15876", "RiderBoudicaStage3"});
             result.put("brynhildr", new String[] {"Brynhildr", "10300", "LancerBrynhildStage3"});
             result.put("caligula", new String[] {"Caligula", "13661", "BerserkerCaligulaStage3"});

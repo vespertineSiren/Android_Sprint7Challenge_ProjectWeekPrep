@@ -30,7 +30,12 @@ public class HistoricalFigure implements Serializable {
 
         this.realName = historyGSON.getDisplaytitle();
         this.realBio = historyGSON.getExtract();
-        this.realImageURL = historyGSON.getOriginalimage().getSource();
+        try {
+            this.realImageURL = historyGSON.getOriginalimage().getSource();
+        } catch (Exception e) {
+           this.realImageURL = null;
+        }
+
         this.realFlavorText = historyGSON.getDescription();
 
         this.fateName = fateGSON.getSections().get(0).getTitle();
@@ -48,6 +53,7 @@ public class HistoricalFigure implements Serializable {
             String imageURL = fateImagesGSON.getQuery().getAllimages().get(i).getUrl();
             if (name.contains(fateImageID)) {
                 this.fateImageURL = imageURL;
+                break;
             }
         }
 
