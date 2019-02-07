@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         search = HistoricalFigureSearchHelper.getINSTANCE();
 
-        testAray = (String[])search.PEOPLE_MAP.get("minamoto no raikou");
+        testAray = search.PEOPLE_MAP.get("minamoto no raikou");
 
         wiki = testAray[0];
         fate = testAray[1];
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                final HistoricalFigure testHF = test = WikiDao.getFateRealBio(wiki, fate);
+                final HistoricalFigure testHF = test = WikiDao.getFateRealBio(wiki, fate, fateImage);
             }
         }).start();
 

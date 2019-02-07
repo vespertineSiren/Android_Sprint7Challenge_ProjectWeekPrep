@@ -1,10 +1,15 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Fate;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.FateImages.FateImages;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
+
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class HistoricalFigure implements Serializable {
-    private String fateName, fateBio, fateImageURL, realName, realBio, realImageURL, realFlavorText;
+    private String realName, realBio, realImageURL, realFlavorText, fateName, fateBio, fateImageURL;
 
     public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
         this.fateName = fateName;
@@ -14,6 +19,35 @@ public class HistoricalFigure implements Serializable {
         this.realBio = realBio;
         this.realImageURL = realImageURL;
         this.realFlavorText = realFlavorText;
+    }
+
+    public HistoricalFigure(History historyGSON, Fate fateGSON, FateImages fateImagesGSON, String fateImageID) {
+
+
+        this.realName = historyGSON.getDisplaytitle();
+        this.realBio = historyGSON.getExtract();
+        this.realImageURL = historyGSON.getOriginalimage().getSource();
+        this.realFlavorText = historyGSON.getDescription();
+
+        this.fateName = fateGSON.getSections().get(0).getTitle();
+        
+        for (int i = 0; i < fateGSON.getSections().size(); i++) {
+            String title = fateGSON.getSections().get(i).getTitle();
+            if (Objects.equals(title, "Identity")) {
+                this.fateBio = fateGSON.getSections().get(i).getContent().get(0).getText();
+                break;
+            }
+        }
+        
+        for (int i = 0; i < fateImagesGSON.getQuery().getAllimages().size(); i++) {
+            String name = fateImagesGSON.getQuery().getAllimages().get(i).getName();
+            String imageURL = fateImagesGSON.getQuery().getAllimages().get(i).getUrl();
+            if (name.contains(fateImageID)) {
+                this.fateImageURL = imageURL;
+            }
+        }
+
+
     }
 
     public String getFateName() {

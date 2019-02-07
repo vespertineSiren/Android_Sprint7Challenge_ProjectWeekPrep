@@ -1,9 +1,10 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Fate;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Image;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.FateImages.FateImages;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ public class WikiDao {
     private static String BASE_FATE_IMAGE_URL =
             "https://typemoon.fandom.com/api.php?action=query&format=json&list=allimages&aisort=name&aifrom=";
 
-    private static final String FATE_IMAGES_URL = BASE_FATE_IMAGE_URL + "%d";
+    private static final String FATE_IMAGES_URL = BASE_FATE_IMAGE_URL;
 
     //Might not need this since BASE_BIOGRAPHY_URL provides tags
     private static String BASE_INFOBOX_URL =
@@ -31,34 +32,47 @@ public class WikiDao {
 //
 //    private static final String HISTORICAL_IMAGE_URL = BASE_IMAGE_URL + "%d";
 
-    public static HistoricalFigure getFateRealBio(String wikipediaID, String fandomID) {
-        Gson gson = new Gson();
-
+    public static HistoricalFigure getFateRealBio(String wikipediaID, String fandomID, String fateImageID) {
 
         HistoricalFigure selectedFigure = null;
 
-
-        String fateBioURL = FATE_BIO_URL + fandomID;
-        String realBioURL = HISTORICAL_INFOBOX_URL + wikipediaID;
-
-        final String fateResult = NetworkAdapter.httpRequest(fateBioURL, NetworkAdapter.GET);
-        final String realResult = NetworkAdapter.httpRequest(realBioURL, NetworkAdapter.GET);
-
-        JSONObject fateTopLevel = null;
         JSONObject realTopLevel = null;
+        JSONObject fateTopLevel = null;
+        JSONObject fateImageTopLevel = null;
+
+        Gson gson = new Gson();
+
+        String realBioURL = HISTORICAL_INFOBOX_URL + wikipediaID;
+        String fateBioURL = FATE_BIO_URL + fandomID;
+        String fateImageURL = FATE_IMAGES_URL + fateImageID;
+
+        final String realResult = NetworkAdapter.httpRequest(realBioURL, NetworkAdapter.GET);
+        final String fateResult = NetworkAdapter.httpRequest(fateBioURL, NetworkAdapter.GET);
+        final String fateImageResult = NetworkAdapter.httpRequest(fateImageURL, NetworkAdapter.GET);
+
+        try {
+            realTopLevel = new JSONObject(realResult);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         try {
             fateTopLevel = new JSONObject(fateResult);
-            realTopLevel = new JSONObject(realResult);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-
+        try {
+            fateImageTopLevel = new JSONObject(fateImageResult);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         Fate gsonFate = gson.fromJson(fateTopLevel.toString(), Fate.class);
+        History gsonHistory = gson.fromJson(realTopLevel.toString(), History.class);
+        FateImages gsonFateImage = gson.fromJson(fateImageTopLevel.toString(), FateImages.class);
 
-
+        selectedFigure = new HistoricalFigure(gsonHistory, gsonFate, gsonFateImage, fateImageID);
 
         return selectedFigure;
     }
