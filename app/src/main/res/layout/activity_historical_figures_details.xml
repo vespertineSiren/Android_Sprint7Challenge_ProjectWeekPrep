@@ -9,14 +9,16 @@
 
     <ImageView
         android:id="@+id/details_image_view"
-        android:layout_width="150dp"
-        android:layout_height="212dp"
+        android:layout_width="206dp"
+        android:layout_height="254dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <fragment
+        android:id="@+id/map"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -26,12 +28,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/details_image_view"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MajorEventsMap" />
+        tools:context=".HistoricalFiguresDetails"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <ScrollView
-        android:id="@+id/summary_textview_scrollview"
+        android:id="@+id/name_textview_scrollview"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -39,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_image_view">
 
-        <LinearLayout
+        <TextView
             android:id="@+id/summary_textview_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,15 +60,17 @@
     </ScrollView>
 
     <ScrollView
-        android:id="@+id/long_bio_scrollview"
+        android:id="@+id/long_bio_textview"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/details_add_to_favorite_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/summary_textview_scrollview">
+        app:layout_constraintTop_toBottomOf="@+id/name_textview_scrollview">
 
         <LinearLayout
             android:id="@+id/long_bio_textview_holder"
@@ -90,7 +95,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/details_write_a_note_button"
@@ -100,7 +106,8 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/details_add_to_favorite_button"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/details_share_profile_butotn"
@@ -111,7 +118,8 @@
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_share"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/details_write_a_note_button" />
+        app:layout_constraintStart_toEndOf="@+id/details_write_a_note_button"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -124,7 +132,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/details_share_profile_butotn"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:ignore="ContentDescription" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,12 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Fate;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Image;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.FateImages.FateImages;
@@ -8,6 +15,12 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class WikiDao {
 
@@ -75,6 +88,92 @@ public class WikiDao {
         selectedFigure = new HistoricalFigure(gsonHistory, gsonFate, gsonFateImage, fateImageID);
 
         return selectedFigure;
+    }
+
+    public static Bitmap getFateImageURL(String fateImageID) {
+
+        JSONObject fateImageTopLevel = null;
+        Gson gson = new Gson();
+        Bitmap returnedImage = null;
+
+        String fateImageURLsearch = FATE_IMAGES_URL + fateImageID;
+        String fateImageURL = null;
+
+        final String fateImageResult = NetworkAdapter.httpRequest(fateImageURLsearch, NetworkAdapter.GET);
+
+        try {
+            fateImageTopLevel = new JSONObject(fateImageResult);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        FateImages gsonFateImage = gson.fromJson(fateImageTopLevel.toString(), FateImages.class);
+
+        for (int i = 0; i < gsonFateImage.getQuery().getAllimages().size(); i++) {
+            String name = gsonFateImage.getQuery().getAllimages().get(i).getName();
+            String imageURL = gsonFateImage.getQuery().getAllimages().get(i).getUrl();
+            if (name.contains(fateImageID)) {
+                fateImageURL = imageURL;
+            }
+        }
+
+        new DownloadFateImageTask(returnedImage).execute(fateImageURL);
+
+        if(returnedImage != null) {
+            return returnedImage;
+        } else {
+            return  null;
+        }
+
+
+    }
+
+    private static class DownloadFateImageTask extends AsyncTask<String, Void, Bitmap> {
+
+        Bitmap output;
+
+        public DownloadFateImageTask(Bitmap input) {
+
+            this.output = input;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            String url = strings[0];
+            Bitmap image;
+            InputStream in;
+            try {
+                URL imageURL = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+
+
+                in = connection.getInputStream();
+                image = BitmapFactory.decodeStream(in);
+                in.close();
+                return image;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return  null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            output = bitmap;
+
+        }
     }
 
 

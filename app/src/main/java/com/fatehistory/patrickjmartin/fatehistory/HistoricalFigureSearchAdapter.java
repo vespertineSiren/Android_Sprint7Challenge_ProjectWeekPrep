@@ -2,19 +2,23 @@ package com.fatehistory.patrickjmartin.fatehistory;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
-
 import java.util.ArrayList;
+
+
 
 public class HistoricalFigureSearchAdapter extends BaseAdapter implements Filterable {
 
@@ -22,6 +26,7 @@ public class HistoricalFigureSearchAdapter extends BaseAdapter implements Filter
     private ArrayList<String> displayedSearchValues;
     LayoutInflater inflater;
     private Activity activity;
+    private boolean isExpanded = false;
 
     public HistoricalFigureSearchAdapter(Context context, Activity activity, ArrayList<String> searchArrayList) {
         this.originalSearchValues = searchArrayList;
@@ -48,6 +53,7 @@ public class HistoricalFigureSearchAdapter extends BaseAdapter implements Filter
     private class ViewHolder {
         LinearLayout linearLayoutContainer;
         TextView hfNameTextView;
+
     }
 
     @Override
@@ -66,13 +72,16 @@ public class HistoricalFigureSearchAdapter extends BaseAdapter implements Filter
 
         holder.hfNameTextView.setText(displayedSearchValues.get(position));
 
-        holder.linearLayoutContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TEST
-                Toast.makeText(activity, displayedSearchValues.get(position), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+//        holder.linearLayoutContainer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TEST
+//                Toast.makeText(activity, displayedSearchValues.get(position), Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//        });
 
         return convertView;
     }

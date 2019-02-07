@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
+    <SearchView
         android:id="@+id/search_bar_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

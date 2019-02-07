@@ -95,7 +95,7 @@ public class HistoricalFigureSearchHelper {
             result.put("mephistopholes", new String[] {"Mephistopheles", "15086", "CasterMephGOStage3"});
             result.put("merlin", new String[] {"Merlin", "4718", "CasterMerlinStage3"});
             result.put("minamoto no raikou", new String[] {"Minamoto_no_Yorimitsu", "19247", "YorimitsuStage3"});
-            result.put("minaomoto no yoshitsune", new String[] {"Minamoto_no_Yoshitsune", "14928", "RiderUshiwakamaruStage3"});
+            result.put("minamoto no yoshitsune", new String[] {"Minamoto_no_Yoshitsune", "14928", "RiderUshiwakamaruStage3"});
             result.put("minotaur", new String[] {"Minotaur", "15870", "BerserkerAsteriosStage3"});
             result.put("miyamoto musashi", new String[] {"Miyamoto_Musashi", "20476", "SaberMusashiStage3"});
             result.put("mordred", new String[] {"Mordred", "5921", "SaberMordredStage3"});
@@ -128,8 +128,12 @@ public class HistoricalFigureSearchHelper {
             result.put("zhuge liang", new String[] {"Zhuge_Liang", "15871", "CasterZLStage3"});
 
             keysTemp = result.keySet();
+
             keys.addAll(keysTemp);
-            key = keysTemp.toArray(new String[keysTemp.size()]);
+            Collections.sort(keys, (String::compareTo));
+
+
+            //key = keysTemp.toArray(new String[keysTemp.size()]);
 
             PEOPLE_MAP = Collections.unmodifiableMap(result);
         }
