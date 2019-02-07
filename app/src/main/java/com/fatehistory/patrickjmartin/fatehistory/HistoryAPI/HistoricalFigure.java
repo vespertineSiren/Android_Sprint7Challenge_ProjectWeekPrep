@@ -11,6 +11,10 @@ import java.util.Objects;
 public class HistoricalFigure implements Serializable {
     private String realName, realBio, realImageURL, realFlavorText, fateName, fateBio, fateImageURL;
 
+    public HistoricalFigure() {
+
+    }
+
     public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
         this.fateName = fateName;
         this.fateBio = fateBio;

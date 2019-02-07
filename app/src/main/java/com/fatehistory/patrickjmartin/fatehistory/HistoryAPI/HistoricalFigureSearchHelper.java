@@ -1,7 +1,9 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,12 +12,14 @@ public class HistoricalFigureSearchHelper {
     private static volatile HistoricalFigureSearchHelper INSTANCE;
     public Map<String, String[]> PEOPLE_MAP;
     public String[] key;
+    public List<String> keys;
 
 
     private HistoricalFigureSearchHelper() {
         if(INSTANCE != null) {
             throw new RuntimeException("Use getINSTANCE()");
         } else {
+            keys = new ArrayList<String>();
             Set<String> keysTemp;
 
             Map<String, String[]> result = new HashMap<String, String[]>();
@@ -124,6 +128,7 @@ public class HistoricalFigureSearchHelper {
             result.put("zhuge liang", new String[] {"Zhuge_Liang", "15871", "CasterZLStage3"});
 
             keysTemp = result.keySet();
+            keys.addAll(keysTemp);
             key = keysTemp.toArray(new String[keysTemp.size()]);
 
             PEOPLE_MAP = Collections.unmodifiableMap(result);
