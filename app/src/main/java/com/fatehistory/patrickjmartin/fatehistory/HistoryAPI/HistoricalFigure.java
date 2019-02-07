@@ -1,67 +1,74 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
-import android.text.TextUtils;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
-public class HistoricalFigure {
-    private String  fateAlias, fateDefaultBio, fateAligment, fateSource, fateCountry, fateGender, fateMiniBio, fateImageKey,
-            realName, realBio, realImageURL;
-
-    private Integer fateHeight, fateWeight, wikiPageID;
+import java.io.Serializable;
 
 
+public class HistoricalFigure implements Serializable {
+    private String fateName, fateBio, fateImageURL, realName, realBio, realImageURL, realFlavorText;
 
-    public HistoricalFigure(JSONObject fateJSON, JSONObject realJSON) {
-        JSONObject temp;
-        JSONArray tempAry;
-
+    public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
+        this.fateName = fateName;
+        this.fateBio = fateBio;
+        this.fateImageURL = fateImageURL;
+        this.realName = realName;
+        this.realBio = realBio;
+        this.realImageURL = realImageURL;
+        this.realFlavorText = realFlavorText;
     }
 
-
-
-    public String getFateAlias() {
-        return fateAlias;
+    public String getFateName() {
+        return fateName;
     }
 
-    public String getFateDefaultBio() {
-        return fateDefaultBio;
+    public void setFateName(String fateName) {
+        this.fateName = fateName;
     }
 
-    public String getFateAligment() {
-        return fateAligment;
+    public String getFateBio() {
+        return fateBio;
     }
 
-    public String getFateSource() {
-        return fateSource;
+    public void setFateBio(String fateBio) {
+        this.fateBio = fateBio;
     }
 
-    public String getFateCountry() {
-        return fateCountry;
+    public String getFateImageURL() {
+        return fateImageURL;
     }
 
-    public String getFateGender() {
-        return fateGender;
-    }
-
-    public String getFateMiniBio() {
-        return fateMiniBio;
+    public void setFateImageURL(String fateImageURL) {
+        this.fateImageURL = fateImageURL;
     }
 
     public String getRealName() {
         return realName;
     }
 
-
-
-    public Integer getFateHeight() {
-        return fateHeight;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
-    public Integer getFateWeight() {
-        return fateWeight;
+    public String getRealBio() {
+        return realBio;
+    }
+
+    public void setRealBio(String realBio) {
+        this.realBio = realBio;
+    }
+
+    public String getRealImageURL() {
+        return realImageURL;
+    }
+
+    public void setRealImageURL(String realImageURL) {
+        this.realImageURL = realImageURL;
+    }
+
+    public String getRealFlavorText() {
+        return realFlavorText;
+    }
+
+    public void setRealFlavorText(String realFlavorText) {
+        this.realFlavorText = realFlavorText;
     }
 }

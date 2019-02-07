@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
     HistoricalFigure test;
+    String[] testAray;
+    String wiki, fate, fateImage;
+    HistoricalFigureSearchHelper search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,27 @@ public class MainActivity extends AppCompatActivity {
 
         context = this;
 
-        test = WikiDao.getFateRealBio("Shuten-dōji", "Shuten_Dōji");
+
+        search = HistoricalFigureSearchHelper.getINSTANCE();
+
+        testAray = (String[])search.PEOPLE_MAP.get("minamoto no raikou");
+
+        wiki = testAray[0];
+        fate = testAray[1];
+        fateImage = testAray[2];
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final HistoricalFigure testHF = test = WikiDao.getFateRealBio(wiki, fate);
+            }
+        }).start();
+
+
+
 
 
     }
