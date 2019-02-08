@@ -1,26 +1,32 @@
 package com.fatehistory.patrickjmartin.fatehistory;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.NetworkAdapter;
 import com.fatehistory.patrickjmartin.fatehistory.PastViewedFragment.OnListFragmentInteractionListener;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class PastViewedHistoricalFigureRecyclerViewAdapter extends RecyclerView.Adapter<PastViewedHistoricalFigureRecyclerViewAdapter.ViewHolder> {
 
     private final List<HistoricalFigure> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    Activity activity;
 
-    public PastViewedHistoricalFigureRecyclerViewAdapter(List<HistoricalFigure> items, OnListFragmentInteractionListener listener) {
+
+    public PastViewedHistoricalFigureRecyclerViewAdapter(Activity activity, ArrayList<HistoricalFigure> items) {
         mValues = items;
-        mListener = listener;
+        this.activity = activity;
     }
 
     @Override
@@ -33,17 +39,25 @@ public class PastViewedHistoricalFigureRecyclerViewAdapter extends RecyclerView.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        holder.mIdView.setText(holder.mItem.getRealName());
+        final Bitmap[] bitmap = new Bitmap[1];
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
+            public void run() {
+                bitmap[0] = NetworkAdapter.httpImageRequest(holder.mItem.getFateImageURL());
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.mContentView.setImageBitmap(bitmap[0]);
+                    }
+                });
 
-                }
             }
-        });
+        }).start();
+
+
+
     }
 
     @Override
@@ -54,19 +68,19 @@ public class PastViewedHistoricalFigureRecyclerViewAdapter extends RecyclerView.
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final ImageView mContentView;
         public HistoricalFigure mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView =  view.findViewById(R.id.past_hf_content);
+            mContentView = view.findViewById(R.id.past_hf_image);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mIdView.getText() + "'";
         }
     }
 }

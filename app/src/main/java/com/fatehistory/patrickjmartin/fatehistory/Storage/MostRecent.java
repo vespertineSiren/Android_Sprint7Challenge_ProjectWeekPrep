@@ -38,7 +38,7 @@ public class MostRecent {
     public int size() {return top;}
 
     public void addHF(HistoricalFigure toAdd) {
-        if(top == 4) {
+        if(top == 5) {
             storage.remove(4);
             storage.add(0, toAdd);
         } else {

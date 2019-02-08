@@ -86,6 +86,7 @@ public class RandomHFFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        randomHFImage.setImageDrawable(null);
         String[] randomSearchTerms = getRandomHF.getRandomHF();
         final String[] url = new String[1];
         final Bitmap[] bitmap = new Bitmap[1];
@@ -122,6 +123,7 @@ public class RandomHFFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        randomHFImage.setImageDrawable(null);
         String[] randomSearchTerms = getRandomHF.getRandomHF();
         final String[] url = new String[1];
         final Bitmap[] bitmap = new Bitmap[1];
