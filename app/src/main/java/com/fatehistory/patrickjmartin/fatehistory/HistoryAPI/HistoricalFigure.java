@@ -1,5 +1,7 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
+import android.graphics.Bitmap;
+
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Fate;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.FateImages.FateImages;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
@@ -12,7 +14,24 @@ public class HistoricalFigure implements Serializable {
     private String realName, realBio, realImageURL, realFlavorText, fateName, fateBio, fateImageURL;
     private Boolean isFavorite;
     private int hfID;
+    private Bitmap fateBitmap, realBitmap;
     public HistoricalFigure() {}
+
+    public Bitmap getFateBitmap() {
+        return fateBitmap;
+    }
+
+    public void setFateBitmap(Bitmap fateBitmap) {
+        this.fateBitmap = fateBitmap;
+    }
+
+    public Bitmap getRealBitmap() {
+        return realBitmap;
+    }
+
+    public void setRealBitmap(Bitmap realBitmap) {
+        this.realBitmap = realBitmap;
+    }
 
     public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
         this.fateName = fateName;

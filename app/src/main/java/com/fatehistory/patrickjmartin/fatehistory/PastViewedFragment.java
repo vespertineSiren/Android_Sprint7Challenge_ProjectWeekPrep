@@ -24,7 +24,7 @@ public class PastViewedFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     static ArrayList<HistoricalFigure> pastArrayList;
-    public static PastViewedHistoricalFigureRecyclerViewAdapter adapter;
+    public PastViewedHistoricalFigureRecyclerViewAdapter adapter;
     private MostRecent mostRecent;
 
     public PastViewedFragment() {

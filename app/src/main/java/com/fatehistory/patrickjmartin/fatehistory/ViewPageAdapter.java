@@ -15,7 +15,7 @@ public class ViewPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return RandomHFFragment.newInstance();
             case 1:
-                return RandomHFFragment.newInstance();
+                return FavoriteFragment.newInstance(1);
             case 2:
                 return PastViewedFragment.newInstance(1);
             default:

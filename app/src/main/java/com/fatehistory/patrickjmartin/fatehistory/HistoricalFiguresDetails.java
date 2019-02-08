@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.NetworkAdapter;
+import com.fatehistory.patrickjmartin.fatehistory.Storage.Favorites;
+import com.fatehistory.patrickjmartin.fatehistory.Storage.ImageCache;
 import com.fatehistory.patrickjmartin.fatehistory.Storage.MostRecent;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,6 +41,8 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
     private TextView detailsNameTextView, detailsBioTextView;
 
     private MostRecent mostRecent;
+    private Favorites favorites;
+    private ImageCache imageCache;
 
 
     private Bitmap fateBitmap, historicBitmap;
@@ -65,6 +69,8 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
         HistoricalFigure historicalFigure = (HistoricalFigure)intent.getSerializableExtra("hfDeets");
 
         mostRecent = MostRecent.getINSTANCE();
+        favorites = Favorites.getINSTANCE();
+        imageCache = ImageCache.getINSTANCE();
 
         mostRecent.addHF(historicalFigure);
 
@@ -75,6 +81,7 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
             @Override
             public void run() {
                 fateBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getFateImageURL());
+                historicalFigure.setFateBitmap(fateBitmap);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -89,6 +96,7 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
                 @Override
                 public void run() {
                     historicBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getRealImageURL());
+                    historicalFigure.setRealBitmap(historicBitmap);
                 }
             }).start();
         }
@@ -210,7 +218,15 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
             }
         });
 
+        findViewById(R.id.details_add_to_favorite_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favorites.addHF(historicalFigure);
 
+
+
+            }
+        });
 
 
 

@@ -1,9 +1,11 @@
 package com.fatehistory.patrickjmartin.fatehistory;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.FavoriteFragment.OnListFragmentInteractionListener;
@@ -15,11 +17,11 @@ import java.util.List;
 public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapter<HistoricalFigureFavesRecyclerViewAdapter.ViewHolder> {
 
     private final List<HistoricalFigure> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    Activity activity;
 
-    public HistoricalFigureFavesRecyclerViewAdapter(List<HistoricalFigure> items, OnListFragmentInteractionListener listener) {
+    public HistoricalFigureFavesRecyclerViewAdapter(Activity activity, List<HistoricalFigure> items) {
         mValues = items;
-        mListener = listener;
+        this.activity = activity;
     }
 
     @Override
@@ -30,20 +32,18 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final HistoricalFigureFavesRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
+        holder.mRealImage.setImageBitmap(holder.mItem.getRealBitmap());
+        holder.mFateImage.setImageBitmap(holder.mItem.getFateBitmap());
+        holder.mIdView.setText(holder.mItem.getRealName());
 
-                }
-            }
-        });
+
+
+
+
     }
 
     @Override
@@ -54,19 +54,21 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final ImageView mFateImage;
+        public final ImageView mRealImage;
         public HistoricalFigure mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView =  view.findViewById(R.id.fave_text_view);
+            mFateImage = view.findViewById(R.id.fave_real_image);
+            mRealImage = view.findViewById(R.id.fave_fate_image);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mIdView.getText() + "'";
         }
     }
 }
