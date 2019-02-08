@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.NetworkAdapter;
+import com.fatehistory.patrickjmartin.fatehistory.Storage.MostRecent;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +37,8 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
 
     private ImageView detailsImaageView;
     private TextView detailsNameTextView, detailsBioTextView;
+
+    private MostRecent mostRecent;
 
 
     private Bitmap fateBitmap, historicBitmap;
@@ -60,6 +63,10 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
 
         Intent intent = getIntent();
         HistoricalFigure historicalFigure = (HistoricalFigure)intent.getSerializableExtra("hfDeets");
+
+        mostRecent = MostRecent.getINSTANCE();
+
+        mostRecent.addHF(historicalFigure);
 
         detailsNameTextView.setText(historicalFigure.getFateName());
         detailsBioTextView.setText(historicalFigure.getFateBio());

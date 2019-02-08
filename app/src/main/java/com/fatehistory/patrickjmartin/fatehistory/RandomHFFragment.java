@@ -1,6 +1,7 @@
 package com.fatehistory.patrickjmartin.fatehistory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -13,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
@@ -21,13 +22,6 @@ import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigureSea
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.NetworkAdapter;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.WikiDao;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class RandomHFFragment extends Fragment {
@@ -37,7 +31,7 @@ public class RandomHFFragment extends Fragment {
 
     private ImageView randomHFImage;
     private TextView randomHFText;
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
     public RandomHFFragment() {
         // Required empty public constructor
@@ -74,18 +68,18 @@ public class RandomHFFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     @Override
@@ -107,6 +101,15 @@ public class RandomHFFragment extends Fragment {
                     public void run() {
                         randomHFText.setText(randomFigure.getRealName());
                         randomHFImage.setImageBitmap(bitmap[0]);
+                        randomHFImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent detailsIntent = new Intent(getActivity(), HistoricalFiguresDetails.class);
+                                detailsIntent.putExtra("hfDeets", randomFigure);
+                                startActivity(detailsIntent);
+
+                            }
+                        });
                     }
                 });
             }
@@ -116,10 +119,44 @@ public class RandomHFFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        String[] randomSearchTerms = getRandomHF.getRandomHF();
+        final String[] url = new String[1];
+        final Bitmap[] bitmap = new Bitmap[1];
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                randomFigure = WikiDao.getFateRealBio
+                        (randomSearchTerms[0], randomSearchTerms[1], randomSearchTerms[2]);
+                url[0] = randomFigure.getFateImageURL();
+                bitmap[0] = NetworkAdapter.httpImageRequest(url[0]);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        randomHFText.setText(randomFigure.getRealName());
+                        randomHFImage.setImageBitmap(bitmap[0]);
+                        randomHFImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent detailsIntent = new Intent(getActivity(), HistoricalFiguresDetails.class);
+                                detailsIntent.putExtra("hfDeets", randomFigure);
+                                startActivity(detailsIntent);
+
+                            }
+                        });
+                    }
+                });
+            }
+        }).start();
 
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(HistoricalFigure item);
     }
+
+    //
+//    public interface OnFragmentInteractionListener {
+//
+//        void onFragmentInteraction(HistoricalFigure item);
+//    }
 }

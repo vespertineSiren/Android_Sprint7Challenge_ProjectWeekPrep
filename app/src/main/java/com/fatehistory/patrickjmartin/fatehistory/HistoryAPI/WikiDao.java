@@ -86,6 +86,7 @@ public class WikiDao {
         FateImages gsonFateImage = gson.fromJson(fateImageTopLevel.toString(), FateImages.class);
 
         selectedFigure = new HistoricalFigure(gsonHistory, gsonFate, gsonFateImage, fateImageID);
+        selectedFigure.setHfID(Integer.parseInt(fandomID));
 
         return selectedFigure;
     }

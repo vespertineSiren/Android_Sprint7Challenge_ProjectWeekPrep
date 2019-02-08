@@ -19,7 +19,7 @@ import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.WikiDao;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements RandomHFFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity  {
 
     private Context context;
     private Activity activity;
@@ -101,16 +101,6 @@ public class MainActivity extends AppCompatActivity implements RandomHFFragment.
     protected void onResume() {
         super.onResume();
 
-    }
-
-    @Override
-    public void onFragmentInteraction(HistoricalFigure item) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("hfDeets", item);
-
-        Intent detailsIntent = new Intent(getApplicationContext(), HistoricalFiguresDetails.class);
-        detailsIntent.putExtra("hfDeets", item);
-        startActivity(detailsIntent);
     }
 
 

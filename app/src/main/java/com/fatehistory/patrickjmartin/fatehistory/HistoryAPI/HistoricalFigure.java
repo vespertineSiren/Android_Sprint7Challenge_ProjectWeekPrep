@@ -10,10 +10,9 @@ import java.util.Objects;
 
 public class HistoricalFigure implements Serializable {
     private String realName, realBio, realImageURL, realFlavorText, fateName, fateBio, fateImageURL;
-
-    public HistoricalFigure() {
-
-    }
+    private Boolean isFavorite;
+    private int hfID;
+    public HistoricalFigure() {}
 
     public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
         this.fateName = fateName;
@@ -57,7 +56,25 @@ public class HistoricalFigure implements Serializable {
             }
         }
 
+        this.isFavorite = false;
 
+
+    }
+
+    public int getHfID() {
+        return hfID;
+    }
+
+    public void setHfID(int hfID) {
+        this.hfID = hfID;
+    }
+
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
     }
 
     public String getFateName() {
