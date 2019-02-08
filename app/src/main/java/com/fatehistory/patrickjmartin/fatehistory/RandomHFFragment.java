@@ -1,63 +1,59 @@
 package com.fatehistory.patrickjmartin.fatehistory;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigureSearchHelper;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.NetworkAdapter;
+import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.WikiDao;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RandomHFFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RandomHFFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RandomHFFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private HistoricalFigure randomFigure;
+    private HistoricalFigureSearchHelper getRandomHF;
 
+    private ImageView randomHFImage;
+    private TextView randomHFText;
     private OnFragmentInteractionListener mListener;
 
     public RandomHFFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RandomHFFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RandomHFFragment newInstance(String param1, String param2) {
+
+    public static RandomHFFragment newInstance() {
         RandomHFFragment fragment = new RandomHFFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        getRandomHF = HistoricalFigureSearchHelper.getINSTANCE();
+
     }
 
     @Override
@@ -67,11 +63,12 @@ public class RandomHFFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_random_hf, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        randomHFImage = view.findViewById(R.id.randomHF_bg_imageview);
+        randomHFText = view.findViewById(R.id.randomHF_textView);
+
     }
 
     @Override
@@ -91,18 +88,38 @@ public class RandomHFFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        String[] randomSearchTerms = getRandomHF.getRandomHF();
+        final String[] url = new String[1];
+        final Bitmap[] bitmap = new Bitmap[1];
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                randomFigure = WikiDao.getFateRealBio
+                        (randomSearchTerms[0], randomSearchTerms[1], randomSearchTerms[2]);
+                url[0] = randomFigure.getFateImageURL();
+                bitmap[0] = NetworkAdapter.httpImageRequest(url[0]);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        randomHFText.setText(randomFigure.getRealName());
+                        randomHFImage.setImageBitmap(bitmap[0]);
+                    }
+                });
+            }
+        }).start();
+
+
+
+    }
+
+
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(HistoricalFigure item);
     }
 }

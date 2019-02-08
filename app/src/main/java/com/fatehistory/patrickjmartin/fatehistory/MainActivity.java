@@ -3,17 +3,15 @@ package com.fatehistory.patrickjmartin.fatehistory;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigure;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.HistoricalFigureSearchHelper;
@@ -21,7 +19,7 @@ import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.WikiDao;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RandomHFFragment.OnFragmentInteractionListener {
 
     private Context context;
     private Activity activity;
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView searchResultsLV;
     private SearchView searchBar;
     private HistoricalFigureSearchAdapter searchAdapter;
+    private FragmentPagerAdapter adapter;
 
     private ArrayList<String> searchArrayList = new ArrayList<String>();
 
@@ -43,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         activity = this;
         search = HistoricalFigureSearchHelper.getINSTANCE();
+        ViewPager viewPager = findViewById(R.id.news_pager_strip);
+
+        adapter = new ViewPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
 
         searchResultsLV = findViewById(R.id.search_list_view);
@@ -99,4 +102,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
     }
+
+    @Override
+    public void onFragmentInteraction(HistoricalFigure item) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("hfDeets", item);
+
+        Intent detailsIntent = new Intent(getApplicationContext(), HistoricalFiguresDetails.class);
+        detailsIntent.putExtra("hfDeets", item);
+        startActivity(detailsIntent);
+    }
+
+
 }

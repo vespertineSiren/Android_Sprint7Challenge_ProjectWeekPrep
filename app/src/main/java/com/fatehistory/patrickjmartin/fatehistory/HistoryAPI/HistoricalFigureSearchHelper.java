@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class HistoricalFigureSearchHelper {
@@ -13,6 +14,7 @@ public class HistoricalFigureSearchHelper {
     public Map<String, String[]> PEOPLE_MAP;
     public String[] key;
     public List<String> keys;
+    public static Random rand;
 
 
     private HistoricalFigureSearchHelper() {
@@ -131,11 +133,8 @@ public class HistoricalFigureSearchHelper {
 
             keys.addAll(keysTemp);
             Collections.sort(keys, (String::compareTo));
-
-
-            //key = keysTemp.toArray(new String[keysTemp.size()]);
-
             PEOPLE_MAP = Collections.unmodifiableMap(result);
+            rand = new Random();
         }
     }
 
@@ -148,6 +147,11 @@ public class HistoricalFigureSearchHelper {
             }
         }
         return INSTANCE;
+    }
+
+    public String[] getRandomHF() {
+        String search = keys.get(rand.nextInt(keys.size()));
+        return PEOPLE_MAP.get(search);
     }
 
     /*
