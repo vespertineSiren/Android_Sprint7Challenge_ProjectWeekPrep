@@ -86,35 +86,35 @@ public class RandomHFFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        randomHFImage.setImageDrawable(null);
-        String[] randomSearchTerms = getRandomHF.getRandomHF();
-        final String[] url = new String[1];
-        final Bitmap[] bitmap = new Bitmap[1];
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                randomFigure = WikiDao.getFateRealBio
-                        (randomSearchTerms[0], randomSearchTerms[1], randomSearchTerms[2]);
-                url[0] = randomFigure.getFateImageURL();
-                bitmap[0] = NetworkAdapter.httpImageRequest(url[0]);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        randomHFText.setText(randomFigure.getRealName());
-                        randomHFImage.setImageBitmap(bitmap[0]);
-                        randomHFImage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent detailsIntent = new Intent(getActivity(), HistoricalFiguresDetails.class);
-                                detailsIntent.putExtra("hfDeets", randomFigure);
-                                startActivity(detailsIntent);
-
-                            }
-                        });
-                    }
-                });
-            }
-        }).start();
+//        randomHFImage.setImageDrawable(null);
+//        String[] randomSearchTerms = getRandomHF.getRandomHF();
+//        final String[] url = new String[1];
+//        final Bitmap[] bitmap = new Bitmap[1];
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                randomFigure = WikiDao.getFateRealBio
+//                        (randomSearchTerms[0], randomSearchTerms[1], randomSearchTerms[2]);
+//                url[0] = randomFigure.getFateImageURL();
+//                bitmap[0] = NetworkAdapter.httpImageRequest(url[0]);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        randomHFText.setText(randomFigure.getRealName());
+//                        randomHFImage.setImageBitmap(bitmap[0]);
+//                        randomHFImage.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent detailsIntent = new Intent(getActivity(), HistoricalFiguresDetails.class);
+//                                detailsIntent.putExtra("hfDeets", randomFigure);
+//                                startActivity(detailsIntent);
+//
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        }).start();
 
 
 
