@@ -36,8 +36,8 @@ public class HistoricalFigureFavesRecyclerViewAdapter extends RecyclerView.Adapt
         holder.mItem = mValues.get(position);
 
 
-        holder.mRealImage.setImageBitmap(holder.mItem.getRealBitmap());
-        holder.mFateImage.setImageBitmap(holder.mItem.getFateBitmap());
+        //TODO: Fix how these images are suppose to be received.
+
         holder.mIdView.setText(holder.mItem.getRealName());
 
 

@@ -3,6 +3,8 @@ package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.fatehistory.patrickjmartin.fatehistory.Storage.ImageCache;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,6 +104,10 @@ public class NetworkAdapter {
                 connection.disconnect();
             }
         }
+
+        ImageCache imageCache = ImageCache.getINSTANCE();
+        imageCache.setObject(urlString, image);
+
         return image;
     }
 

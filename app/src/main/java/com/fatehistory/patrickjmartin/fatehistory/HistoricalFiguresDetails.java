@@ -77,29 +77,42 @@ public class HistoricalFiguresDetails extends AppCompatActivity implements OnMap
         detailsNameTextView.setText(historicalFigure.getFateName());
         detailsBioTextView.setText(historicalFigure.getFateBio());
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                fateBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getFateImageURL());
-                historicalFigure.setFateBitmap(fateBitmap);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        detailsImaageView.setImageBitmap(fateBitmap);
-                    }
-                });
-            }
-        }).start();
 
-        if(historicalFigure.getRealImageURL() != null) {
+        fateBitmap = (Bitmap) imageCache.getObject(historicalFigure.getFateImageURL());
+
+        if(fateBitmap != null) {
+            detailsImaageView.setImageBitmap(fateBitmap);
+        } else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    historicBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getRealImageURL());
-                    historicalFigure.setRealBitmap(historicBitmap);
+                    fateBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getFateImageURL());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            detailsImaageView.setImageBitmap(fateBitmap);
+                        }
+                    });
                 }
             }).start();
         }
+
+
+        historicBitmap = (Bitmap) imageCache.getObject(historicalFigure.getRealImageURL());
+
+        if(historicBitmap == null) {
+            if(historicalFigure.getRealImageURL() != null) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        historicBitmap = NetworkAdapter.httpImageRequest(historicalFigure.getRealImageURL());
+
+                    }
+                }).start();
+            }
+        }
+
+
 
         detailsImaageView.setOnClickListener(new View.OnClickListener() {
             @Override

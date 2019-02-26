@@ -1,7 +1,7 @@
 package com.fatehistory.patrickjmartin.fatehistory.HistoryAPI;
 
-import android.graphics.Bitmap;
-
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.Fate.Fate;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.FateImages.FateImages;
 import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
@@ -9,29 +9,19 @@ import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity
 public class HistoricalFigure implements Serializable {
+
+    @PrimaryKey
+    private Integer hfID;
+
     private String realName, realBio, realImageURL, realFlavorText, fateName, fateBio, fateImageURL;
     private Boolean isFavorite;
-    private int hfID;
-    private Bitmap fateBitmap, realBitmap;
+
+
+
     public HistoricalFigure() {}
 
-    public Bitmap getFateBitmap() {
-        return fateBitmap;
-    }
-
-    public void setFateBitmap(Bitmap fateBitmap) {
-        this.fateBitmap = fateBitmap;
-    }
-
-    public Bitmap getRealBitmap() {
-        return realBitmap;
-    }
-
-    public void setRealBitmap(Bitmap realBitmap) {
-        this.realBitmap = realBitmap;
-    }
 
     public HistoricalFigure(String fateName, String fateBio, String fateImageURL, String realName, String realBio, String realImageURL, String realFlavorText) {
         this.fateName = fateName;
@@ -80,11 +70,11 @@ public class HistoricalFigure implements Serializable {
 
     }
 
-    public int getHfID() {
+    public Integer getHfID() {
         return hfID;
     }
 
-    public void setHfID(int hfID) {
+    public void setHfID(Integer hfID) {
         this.hfID = hfID;
     }
 
@@ -150,5 +140,16 @@ public class HistoricalFigure implements Serializable {
 
     public void setRealFlavorText(String realFlavorText) {
         this.realFlavorText = realFlavorText;
+    }
+
+    @Override
+    public boolean equals( Object o) {
+        if (this == o) return true;
+        if(!(o instanceof HistoricalFigure)) return false;
+
+        HistoricalFigure hf = (HistoricalFigure) o;
+
+        if(hfID != hf.hfID) return false;
+        return realName != null ? realName.equals(hf.fateName) : hf.realName == null;
     }
 }
