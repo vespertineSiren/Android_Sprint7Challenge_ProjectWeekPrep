@@ -9,7 +9,7 @@ import com.fatehistory.patrickjmartin.fatehistory.HistoryAPI.History.History;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
+@Entity(tableName = "historicalfigure")
 public class HistoricalFigure implements Serializable {
 
     @PrimaryKey
